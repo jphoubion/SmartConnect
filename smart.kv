@@ -1,0 +1,159 @@
+#:import KivyLexer kivy.extras.highlight.KivyLexer
+
+
+# déclaration des variables pour faire le lien avec le code Python
+# format -> nom_var_python:nom_var_kv
+
+#    v_login:id_login
+#    v_id_password:id_password
+#    v_btn_connection:id_btn_connection
+#    v_cb_keepInfo:id_cb_keepInfo
+
+
+NavigationLayout:
+    id:NavLayout
+    ScreenManager:
+        id:screen_manager
+        LoginWindow
+        MainWindow
+############################################################""
+# Menu setup
+    MDNavigationDrawer:
+        id: nav_drawer
+        name:'nav_drawer'
+        orientation: 'vertical'
+#        padding: '8dp'
+#        spacing: '8dp'
+
+        MDGridLayout: # Format the header menu (logo + text)
+            cols: 2
+            rows: 1
+            padding: '8dp'
+            spacing: '8dp'
+            md_bg_color: 0.8,0,0,1
+            size_hint_y: None
+            Image:
+                source: 'img/logo2.png'
+                size_hint: None, None
+            MDBoxLayout:
+                orientation:'vertical'
+                MDLabel:
+                    text: 'Vos données\nd\'activité Smart...'
+                    font_style: 'Button'
+                    height: self.texture_size[1]
+                    padding_x: '8dp'
+                    color:1,1,1,1
+                MDLabel:
+                    text: 'jp.houbion@hl-informatique.be'
+                    font_style: "Caption"
+                    padding_x: '8dp'
+                    height: self.texture_size[1]
+                    color:1,1,1,1
+        MDSeparator:
+
+        ScrollView:
+            MDList:
+#                md_bg_color: 0.1,0.1,0.1,1
+                id:md_list
+                OneLineIconListItem:
+                    on_release:
+                        screen_manager.current = "MainWindow"
+                        nav_drawer.set_state("close")
+                    text: "Activité : 95682"
+                    IconLeftWidget:
+                        icon: "bank"
+                OneLineIconListItem:
+                    text: "Paramètres"
+                    IconLeftWidget:
+                        icon: "settings"
+                MDSeparator:
+
+                OneLineIconListItem:
+                    text: "Quitter"
+
+                    IconLeftWidget:
+                        icon: "login"
+
+
+#############################################################""
+# Screen definition
+
+<LoginWindow>:
+    name:'LoginWindow'
+
+    Image:
+        source: 'img/logo2.png'
+        opacity: 0.2
+    MDToolbar:
+        title: 'SmartConnect'
+        elevation: 10
+        pos_hint:{'top':1}
+        md_bg_color: 0.8,0,0,1
+        left_action_items: [['menu', lambda x: app.root.ids.nav_drawer.set_state('open')]]
+    MDBoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        padding: '16dp'
+        spacing:'16dp'
+        pos_hint:{'top':0.5}
+        MDLabel:
+            text:'Connectez-vous!'
+            halign:'center'
+            font_style:'H4'
+            size_hint_y: None
+            pos_hint:{'top':1}
+
+        MDTextField:
+            id:id_login
+            hint_text:'Login :'
+            font_style:'h6'
+            size_hint_y: None
+            color_mode: 'custom'
+            line_color_focus: 1, 0.5, .5, 1
+            active_item: 1,1,1,.2
+
+        MDTextField:
+            id:id_password
+            hint_text:'Password :'
+            font_style:'h6'
+            size_hint_y: None
+            color_mode: 'custom'
+            line_color_focus: 1, 0.5, .5, 1
+            active_item: 1,1,1,.2
+
+        MDCheckbox:
+            id:id_cb_keepInfo
+#                    size_hint: (1,1)
+#                MDLabel:
+#                    text:'Enregistrer'
+#                    height: self.texture_size[1]
+#                    size_hint: (0,.5)
+
+
+        MDRectangleFlatButton:
+            id:btn_connection
+            text:'Connexion'
+            pos_hint: {"center_x": .5,"center_y": .5}
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+            md_bg_color:1,0,0,.8
+#            on_press:
+#                SmartConnect.checkUser()
+
+<MainWindow>:
+    name:'MainWindow'
+    Image:
+        source: 'img/logo2.png'
+        opacity: 0.5
+    MDToolbar:
+        title: 'Votre activité numéro...'
+        elevation: 10
+        pos_hint:{'top':1}
+        md_bg_color: 0.8,0,0,1
+        left_action_items: [['menu', lambda x:app.root.ids.nav_drawer.set_state('open')]]
+
+
+
+<MDLabel>:
+    color:1,1,1,1
+
